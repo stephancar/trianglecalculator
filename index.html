@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>steefware.com — Right Triangle</title>
+    <meta
+      name="description"
+      content="A minimal right-triangle calculator. Enter A and B to compute C, angles, area, and more — locally in your browser."
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-white text-black antialiased">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <!-- Header -->
+      <header class="flex items-center justify-between py-6">
+        <a
+          href="https://steefware.com"
+          class="inline-flex items-center gap-2 rounded-xl border-2 border-black px-3 py-2 text-sm font-black tracking-tight shadow-[4px_4px_0_0_#000] transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:translate-x-0.5 focus:outline-none focus-visible:ring-4 focus-visible:ring-black focus-visible:ring-offset-4 focus-visible:ring-offset-white"
+          aria-label="steefware home"
+        >
+          <span class="inline-block h-2 w-2 rounded-full bg-fuchsia-500"></span>
+          steefware.com
+        </a>
+
+        <nav class="flex items-center gap-3 text-sm font-semibold">
+          <a
+            href="#"
+            class="rounded-lg px-2 py-1 underline underline-offset-4 decoration-2 decoration-black/30 transition-colors duration-150 hover:decoration-black focus:outline-none focus-visible:ring-4 focus-visible:ring-black focus-visible:ring-offset-4 focus-visible:ring-offset-white"
+            >about</a
+          >
+          <a
+            href="#tool"
+            class="rounded-lg px-2 py-1 underline underline-offset-4 decoration-2 decoration-black/30 transition-colors duration-150 hover:decoration-black focus:outline-none focus-visible:ring-4 focus-visible:ring-black focus-visible:ring-offset-4 focus-visible:ring-offset-white"
+            >apps</a
+          >
+        </nav>
+      </header>
+
+      <!-- Main -->
+      <main id="tool" class="pb-14 pt-6">
+        <!-- Hero / Title card -->
+        <section class="relative">
+          <div class="rounded-3xl border-2 border-black p-6 shadow-[8px_8px_0_0_#000] sm:p-10">
+            <h1 class="text-balance text-4xl font-black tracking-tight sm:text-5xl">
+              Right Triangle
+            </h1>
+
+            <div class="mt-4 space-y-2 text-base font-semibold sm:text-lg">
+              <p>Optimized for the common case: enter <span class="font-black">A</span> and <span class="font-black">B</span> to compute <span class="font-black">C</span>.</p>
+              <p class="text-black/70">No units. Everything runs locally in your browser.</p>
+            </div>
+
+            <div
+              class="pointer-events-none absolute -right-2 -top-2 hidden h-10 w-10 rotate-6 rounded-2xl border-2 border-black bg-amber-300 shadow-[4px_4px_0_0_#000] sm:block"
+              aria-hidden="true"
+            ></div>
+          </div>
+        </section>
+
+        <!-- App layout -->
+        <section class="mt-10 grid grid-cols-1 gap-5 lg:grid-cols-3">
+          <!-- Calculator -->
+          <section class="lg:col-span-2">
+            <div class="rounded-3xl border-2 border-black bg-white p-6 shadow-[8px_8px_0_0_#000] sm:p-8">
+              <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                <div>
+                  <h2 class="text-xl font-black tracking-tight">Calculate</h2>
+                  <p class="mt-1 text-sm font-semibold text-black/70">
+                    Legs <span class="font-black">A</span> and <span class="font-black">B</span> form the right angle. Hypotenuse is <span class="font-black">C</span>.
+                  </p>
+                </div>
+
+                <div
+                  id="modeBadge"
+                  class="inline-flex items-center rounded-full border-2 border-black px-3 py-1 text-xs font-black shadow-[3px_3px_0_0_#000]"
+                >
+                  Mode: A + B → C
+                </div>
+              </div>
+
+              <!-- Inputs -->
+              <div class="mt-6 grid gap-4">
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div class="rounded-2xl border-2 border-black bg-white p-5 shadow-[6px_6px_0_0_#000]">
+                    <label for="A" class="text-sm font-black uppercase tracking-widest">Leg A</label>
+                    <p class="mt-1 text-sm font-semibold text-black/70">One of the perpendicular sides</p>
+                    <input
+                      id="A"
+                      inputmode="decimal"
+                      placeholder="e.g. 3"
+                      class="mt-4 w-full rounded-2xl border-2 border-black bg-white px-4 py-3 font-mono text-sm font-black tracking-tight shadow-[4px_4px_0_0_#000] focus:outline-none focus-visible:ring-4 focus-visible:ring-black focus-visible:ring-offset-4 focus-visible:ring-offset-white"
+                      aria-label="Leg A"
+                    />
+                  </div>
+
+                  <div class="rounded-2xl border-2 border-black bg-white p-5 shadow-[6px_6px_0_0_#000]">
+                    <label for="B" class="text-sm font-black uppercase tracking-widest">Leg B</label>
+                    <p class="mt-1 text-sm font-semibold text-black/70">The other perpendicular side</p>
+                    <input
+                      id="B"
+                      inputmode="decimal"
+                      placeholder="e.g. 4"
+                      class="mt-4 w-full rounded-2xl border-2 border-black bg-white px-4 py-3 font-mono text-sm font-black tracking-tight shadow-[4px_4px_0_0_#000] focus:outline-none focus-visible:ring-4 focus-visible:ring-black focus-visible:ring-offset-4 focus-visible:ring-offset-white"
+                      aria-label="Leg B"
+                    />
+                  </div>
+                </div>
+
+                <!-- Output row -->
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
+                  <div
+                    class="rounded-2xl border-2 border-black bg-white p-5 shadow-[6px_6px_0_0_#000]"
+                    aria-live="polite"
+                  >
+                    <div class="flex items-start justify-between gap-4">
+                      <div>
+                        <div class="text-sm font-black uppercase tracking-widest">Hypotenuse C</div>
+                        <div class="mt-1 text-sm font-semibold text-black/70">Computed as √(A² + B²)</div>
+                      </div>
+                      <span
+                        class="inline-flex items-center rounded-full border-2 border-black bg-white px-3 py-1 font-mono text-xs font-black shadow-[3px_3px_0_0_#000]"
+                        id="pyth"
+                        >C = —</span
+                      >
+                    </div>
+
+                    <div
+                      id="C"
+                      class="mt-4 min-h-[52px] w-full overflow-auto rounded-2xl border-2 border-black bg-white px-4 py-3 font-mono text-sm font-black tracking-tight shadow-[4px_4px_0_0_#000]"
+                    ></div>
+                  </div>
+
+                  <div class="grid gap-3">
+                    <button
+                      id="swapBtn"
+                      class="inline-flex items-center justify-center rounded-2xl border-2 border-black bg-white px-4 py-3 text-sm font-black shadow-[4px_4px_0_0_#000] transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:translate-x-0.5 focus:outline-none focus-visible:ring-4 focus-visible:ring-black focus-visible:ring-offset-4 focus-visible:ring-offset-white"
+                      type="button"
+                      title="Swap A and B"
+                    >
+                      Swap A↔B
+                    </button>
+
+                    <button
+                      id="copyCBtn"
+                      class="inline-flex items-center justify-center gap-2 rounded-2xl border-2 border-black bg-fuchsia-500 px-4 py-3 text-sm font-black shadow-[4px_4px_0_0_#000] transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:translate-x-0.5 focus:outline-none focus-visible:ring-4 focus-visible:ring-black focus-visible:ring-offset-4 focus-visible:ring-offset-white"
+                      type="button"
+                      title="Copy C"
+                    >
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M9 9h11v11H9V9Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
+                      Copy C
+                    </button>
+
+                    <button
+                      id="clearBtn"
+                      class="inline-flex items-center justify-center rounded-2xl border-2 border-black bg-white px-4 py-3 text-sm font-black shadow-[4px_4px_0_0_#000] transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:translate-x-0.5 focus:outline-none focus-visible:ring-4 focus-visible:ring-black focus-visible:ring-offset-4 focus-visible:ring-offset-white"
+                      type="button"
+                      title="Clear"
+                    >
+                      Clear
+                    </button>
+
+                    <button
+                      id="exBtn"
+                      class="inline-flex items-center justify-center rounded-2xl border-2 border-black bg-white px-4 py-3 text-sm font-black shadow-[4px_4px_0_0_#000] transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:translate-x-0.5 focus:outline-none focus-visible:ring-4 focus-visible:ring-black focus-visible:ring-offset-4 focus-visible:ring-offset-white"
+                      type="button"
+                      title="Example 3-4-5"
+                    >
+                      Example 3–4–5
+                    </button>
+                  </div>
+                </div>
+
+                <div id="statusHint" class="min-h-[18px] text-sm font-semibold text-black/70" role="status"></div>
+              </div>
+
+              <!-- Details -->
+              <div class="mt-8">
+                <h3 class="text-sm font-black uppercase tracking-widest">Details</h3>
+
+                <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div class="rounded-2xl border-2 border-black bg-white p-4 shadow-[6px_6px_0_0_#000]">
+                    <div class="flex items-start justify-between gap-3">
+                      <div>
+                        <div class="text-sm font-black">Angle α</div>
+                        <div class="text-xs font-semibold text-black/70">Opposite B</div>
+                      </div>
+                      <div id="alpha" class="font-mono text-sm font-black">—</div>
+                    </div>
+                  </div>
+
+                  <div class="rounded-2xl border-2 border-black bg-white p-4 shadow-[6px_6px_0_0_#000]">
+                    <div class="flex items-start justify-between gap-3">
+                      <div>
+                        <div class="text-sm font-black">Angle β</div>
+                        <div class="text-xs font-semibold text-black/70">Opposite A</div>
+                      </div>
+                      <div id="beta" class="font-mono text-sm font-black">—</div>
+                    </div>
+                  </div>
+
+                  <div class="rounded-2xl border-2 border-black bg-white p-4 shadow-[6px_6px_0_0_#000]">
+                    <div class="flex items-start justify-between gap-3">
+                      <div>
+                        <div class="text-sm font-black">Area</div>
+                        <div class="text-xs font-semibold text-black/70">A·B / 2</div>
+                      </div>
+                      <div id="area" class="font-mono text-sm font-black">—</div>
+                    </div>
+                  </div>
+
+                  <div class="rounded-2xl border-2 border-black bg-white p-4 shadow-[6px_6px_0_0_#000]">
+                    <div class="flex items-start justify-between gap-3">
+                      <div>
+                        <div class="text-sm font-black">Perimeter</div>
+                        <div class="text-xs font-semibold text-black/70">A + B + C</div>
+                      </div>
+                      <div id="perim" class="font-mono text-sm font-black">—</div>
+                    </div>
+                  </div>
+
+                  <div class="rounded-2xl border-2 border-black bg-white p-4 shadow-[6px_6px_0_0_#000]">
+                    <div class="flex items-start justify-between gap-3">
+                      <div>
+                        <div class="text-sm font-black">Altitude to C</div>
+                        <div class="text-xs font-semibold text-black/70">A·B / C</div>
+                      </div>
+                      <div id="alt" class="font-mono text-sm font-black">—</div>
+                    </div>
+                  </div>
+
+                  <div class="rounded-2xl border-2 border-black bg-white p-4 shadow-[6px_6px_0_0_#000]">
+                    <div class="flex items-start justify-between gap-3">
+                      <div>
+                        <div class="text-sm font-black">Inradius</div>
+                        <div class="text-xs font-semibold text-black/70">(A + B − C) / 2</div>
+                      </div>
+                      <div id="inr" class="font-mono text-sm font-black">—</div>
+                    </div>
+                  </div>
+
+                  <div class="rounded-2xl border-2 border-black bg-white p-4 shadow-[6px_6px_0_0_#000] sm:col-span-2">
+                    <div class="flex items-start justify-between gap-3">
+                      <div>
+                        <div class="text-sm font-black">Circumradius</div>
+                        <div class="text-xs font-semibold text-black/70">C / 2</div>
+                      </div>
+                      <div id="cr" class="font-mono text-sm font-black">—</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <button
+                    id="copyAllBtn"
+                    class="inline-flex items-center justify-center gap-2 rounded-2xl border-2 border-black bg-white px-4 py-3 text-sm font-black shadow-[4px_4px_0_0_#000] transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:translate-x-0.5 focus:outline-none focus-visible:ring-4 focus-visible:ring-black focus-visible:ring-offset-4 focus-visible:ring-offset-white"
+                    type="button"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M9 9h11v11H9V9Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    Copy all
+                  </button>
+
+                  <p class="text-sm font-semibold text-black/70">
+                    Tip: decimals accept “.” or “,”
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sidebar -->
+          <aside>
+            <div class="rounded-3xl border-2 border-black bg-white p-6 shadow-[8px_8px_0_0_#000] sm:p-8">
+              <h2 class="text-xl font-black tracking-tight">Preview</h2>
+              <p class="mt-1 text-sm font-semibold text-black/70">
+                A quick sketch. Scales roughly with your values.
+              </p>
+
+              <div class="mt-6 rounded-2xl border-2 border-black bg-white p-5 shadow-[6px_6px_0_0_#000]">
+                <svg viewBox="0 0 360 260" class="h-auto w-full" aria-label="Right triangle sketch" role="img">
+                  <rect x="10" y="10" width="340" height="240" rx="18" ry="18" fill="#fff" stroke="#000" stroke-width="2" />
+                  <path id="triPath" d="M70 205 L290 205 L70 55 Z" fill="#fff" stroke="#000" stroke-width="2" />
+                  <path d="M70 205 L98 205 L98 177 L70 177 Z" fill="#fff" stroke="#000" stroke-width="2" />
+                  <text x="56" y="224" font-family="ui-monospace, monospace" font-size="14" font-weight="700">90°</text>
+
+                  <text id="labA" x="52" y="130" font-family="ui-monospace, monospace" font-size="14" font-weight="800" transform="rotate(-90 52 130)">A</text>
+                  <text id="labB" x="180" y="226" font-family="ui-monospace, monospace" font-size="14" font-weight="800" text-anchor="middle">B</text>
+                  <text id="labC" x="210" y="128" font-family="ui-monospace, monospace" font-size="14" font-weight="800" transform="rotate(35 210 128)">C</text>
+                </svg>
+
+                <div class="mt-4 text-sm font-semibold text-black/80">
+                  <div class="flex items-center justify-between">
+                    <span class="font-black">A</span><span class="font-mono" id="kA">—</span>
+                  </div>
+                  <div class="mt-2 flex items-center justify-between">
+                    <span class="font-black">B</span><span class="font-mono" id="kB">—</span>
+                  </div>
+                  <div class="mt-2 flex items-center justify-between">
+                    <span class="font-black">C</span><span class="font-mono" id="kC">—</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-6 rounded-2xl border-2 border-black bg-white p-5 shadow-[6px_6px_0_0_#000]">
+                <h3 class="text-sm font-black uppercase tracking-widest">Notes</h3>
+                <ul class="mt-3 space-y-2 text-sm font-semibold text-black/80">
+                  <li>• Uses <span class="font-black">Pythagoras</span> for C.</li>
+                  <li>• Angles from <span class="font-black">atan2</span>.</li>
+                  <li>• Everything computed locally.</li>
+                </ul>
+              </div>
+            </div>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      (() => {
+        const $ = (id) => document.getElementById(id);
+
+        const el = {
+          A: $("A"),
+          B: $("B"),
+          C: $("C"),
+          pyth: $("pyth"),
+          status: $("statusHint"),
+
+          alpha: $("alpha"),
+          beta: $("beta"),
+          area: $("area"),
+          perim: $("perim"),
+          alt: $("alt"),
+          inr: $("inr"),
+          cr: $("cr"),
+
+          swapBtn: $("swapBtn"),
+          copyCBtn: $("copyCBtn"),
+          copyAllBtn: $("copyAllBtn"),
+          clearBtn: $("clearBtn"),
+          exBtn: $("exBtn"),
+
+          kA: $("kA"),
+          kB: $("kB"),
+          kC: $("kC"),
+          triPath: $("triPath"),
+        };
+
+        function parseNum(v) {
+          const s = String(v ?? "").trim().replace(",", ".");
+          if (!s) return null;
+          const n = Number(s);
+          return Number.isFinite(n) ? n : null;
+        }
+
+        function fmt(x) {
+          if (!Number.isFinite(x)) return "—";
+          const ax = Math.abs(x);
+          if (ax >= 1000) return x.toFixed(3);
+          if (ax >= 100) return x.toFixed(3);
+          if (ax >= 10) return x.toFixed(4);
+          if (ax >= 1) return x.toFixed(5);
+          return x.toFixed(6);
+        }
+
+        function fmtDeg(x) {
+          if (!Number.isFinite(x)) return "—";
+          return (
+            x.toFixed(6).replace(/0+$/, "").replace(/\.$/, "") + "°"
+          );
+        }
+
+        function setStatus(msg, ok = true) {
+          el.status.textContent = msg || "";
+          el.status.classList.remove("text-black/70", "text-red-600");
+          el.status.classList.add(ok ? "text-black/70" : "text-red-600");
+        }
+
+        async function copyToClipboard(text) {
+          try {
+            await navigator.clipboard.writeText(text);
+            setStatus("Copied to clipboard.");
+          } catch {
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            ta.style.position = "fixed";
+            ta.style.left = "-9999px";
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+              document.execCommand("copy");
+              setStatus("Copied to clipboard.");
+            } catch {
+              setStatus("Copy failed. Select and copy manually.", false);
+            } finally {
+              document.body.removeChild(ta);
+            }
+          }
+        }
+
+        function compute(A, B) {
+          if (!(A > 0) || !(B > 0)) return null;
+
+          const C = Math.hypot(A, B);
+          const area = (A * B) / 2;
+          const perim = A + B + C;
+
+          // α opposite B; β opposite A; α + β = 90°
+          const alpha = (Math.atan2(B, A) * 180) / Math.PI;
+          const beta = 90 - alpha;
+
+          // altitude from right angle to hypotenuse
+          const alt = (A * B) / C;
+
+          // inradius for right triangle
+          const inr = (A + B - C) / 2;
+
+          // circumradius for right triangle
+          const cr = C / 2;
+
+          return { A, B, C, area, perim, alpha, beta, alt, inr, cr };
+        }
+
+        function updateSketch(A, B, C) {
+          // Map (0,0)->(B,0)->(0,A) onto pixels inside a fixed box
+          // We'll scale so the largest leg fits.
+          const Ax = A, Bx = B;
+          if (!(Ax > 0) || !(Bx > 0)) return;
+
+          const maxLeg = Math.max(Ax, Bx);
+          const basePx = 220; // from x=70 to x=290
+          const scale = basePx / maxLeg;
+
+          const origin = { x: 70, y: 205 };
+          const pB = { x: origin.x + (Bx * scale), y: origin.y };
+          const pA = { x: origin.x, y: origin.y - (Ax * scale) };
+
+          el.triPath.setAttribute(
+            "d",
+            `M${origin.x} ${origin.y} L${pB.x} ${pB.y} L${pA.x} ${pA.y} Z`
+          );
+
+          el.kA.textContent = fmt(A);
+          el.kB.textContent = fmt(B);
+          el.kC.textContent = fmt(C);
+        }
+
+        function render() {
+          const A = parseNum(el.A.value);
+          const B = parseNum(el.B.value);
+
+          // Live hypotenuse badge
+          if (A > 0 && B > 0) {
+            const C = Math.hypot(A, B);
+            el.pyth.textContent = `C = ${fmt(C)}`;
+          } else {
+            el.pyth.textContent = `C = —`;
+          }
+
+          if (A == null && B == null) {
+            el.C.textContent = "";
+            el.alpha.textContent = "—";
+            el.beta.textContent = "—";
+            el.area.textContent = "—";
+            el.perim.textContent = "—";
+            el.alt.textContent = "—";
+            el.inr.textContent = "—";
+            el.cr.textContent = "—";
+            el.kA.textContent = "—";
+            el.kB.textContent = "—";
+            el.kC.textContent = "—";
+            setStatus("Enter A and B to compute C.");
+            return;
+          }
+
+          if (!(A > 0) || !(B > 0)) {
+            el.C.textContent = "";
+            setStatus("A and B must be positive numbers.", false);
+            return;
+          }
+
+          const res = compute(A, B);
+          if (!res) {
+            el.C.textContent = "";
+            setStatus("Could not compute (check inputs).", false);
+            return;
+          }
+
+          el.C.textContent = fmt(res.C);
+          el.alpha.textContent = fmtDeg(res.alpha);
+          el.beta.textContent = fmtDeg(res.beta);
+          el.area.textContent = fmt(res.area);
+          el.perim.textContent = fmt(res.perim);
+          el.alt.textContent = fmt(res.alt);
+          el.inr.textContent = fmt(res.inr);
+          el.cr.textContent = fmt(res.cr);
+
+          updateSketch(res.A, res.B, res.C);
+          setStatus("Computed from A and B (right triangle).");
+        }
+
+        el.A.addEventListener("input", render);
+        el.B.addEventListener("input", render);
+
+        el.swapBtn.addEventListener("click", () => {
+          const t = el.A.value;
+          el.A.value = el.B.value;
+          el.B.value = t;
+          render();
+        });
+
+        el.clearBtn.addEventListener("click", () => {
+          el.A.value = "";
+          el.B.value = "";
+          el.C.textContent = "";
+          setStatus("");
+          render();
+          setStatus("Cleared.");
+        });
+
+        el.exBtn.addEventListener("click", () => {
+          el.A.value = "3";
+          el.B.value = "4";
+          render();
+          setStatus("Loaded example: 3–4–5.");
+        });
+
+        el.copyCBtn.addEventListener("click", () => {
+          const c = el.C.textContent.trim();
+          if (!c) return setStatus("Nothing to copy yet.", false);
+          copyToClipboard(c);
+        });
+
+        el.copyAllBtn.addEventListener("click", () => {
+          const A = parseNum(el.A.value);
+          const B = parseNum(el.B.value);
+          if (!(A > 0) || !(B > 0)) return setStatus("Enter A and B first.", false);
+
+          const r = compute(A, B);
+          const text =
+`Right triangle
+A = ${fmt(r.A)}
+B = ${fmt(r.B)}
+C = ${fmt(r.C)}
+alpha = ${fmtDeg(r.alpha)}
+beta  = ${fmtDeg(r.beta)}
+area  = ${fmt(r.area)}
+perim = ${fmt(r.perim)}
+alt(C)= ${fmt(r.alt)}
+inr   = ${fmt(r.inr)}
+cr    = ${fmt(r.cr)}`;
+          copyToClipboard(text);
+        });
+
+        // Enter triggers a re-render (already live), but feels nice.
+        [el.A, el.B].forEach((inp) => {
+          inp.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              render();
+            }
+          });
+        });
+
+        render();
+      })();
+    </script>
+  </body>
+</html>
